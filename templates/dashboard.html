@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#02070f" />
+    <title>Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="page-wrap">
+      <header class="top-bar">
+        <div class="brand-wrap">
+          <div class="brand-wordmark small">
+            <span class="brand-mark">F</span>
+            <span class="brand-name">FilmFinder</span>
+          </div>
+        </div>
+        <div class="top-actions">
+          <span class="user-pill">{{ user }}</span>
+          {% if user != "Guest" %}
+          <a href="/logout" class="logout-btn">Logout</a>
+          {% endif %}
+        </div>
+      </header>
+
+      {% if user == "Guest" %}
+      <section class="guest-banner">
+        <p>
+          Please login to get personalized recommendations and save your
+          history.
+        </p>
+      </section>
+      {% endif %}
+
+      <section class="hero-panel">
+        <div>
+          <p class="eyebrow">Welcome back</p>
+          <h1>Find your next favorite movie</h1>
+        </div>
+        <form class="search-form" method="POST" action="/recommend">
+          <input
+            type="text"
+            name="query"
+            placeholder="Search by movie, actor, or description"
+          />
+          <button type="submit">Search</button>
+        </form>
+      </section>
+
+      <section class="recommendations-section">
+        <div class="section-header">
+          <h2>Recommended for you</h2>
+        </div>
+        {% if movies %}
+        <div class="results">
+          {% for movie in movies %}
+          <a
+            href="{{ url_for('movie_details', title=movie.title) }}"
+            class="card-link"
+          >
+            <div class="card">
+              <img
+                src="{{ movie.poster }}"
+                loading="lazy"
+                decoding="async"
+                referrerpolicy="no-referrer"
+                onerror="
+                  this.onerror = null;
+                  this.src = '/static/no_poster.png';
+                "
+                alt="{{ movie.title }}"
+              />
+              <div class="card-info">
+                <p>{{ movie.title }}</p>
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="no-results">No movie recommendations found yet.</p>
+        {% endif %}
+      </section>
+    </div>
+  </body>
+</html>

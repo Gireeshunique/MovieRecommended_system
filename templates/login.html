@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#02070f" />
+    <title>Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body class="auth-page">
+    <div class="auth-overlay"></div>
+
+    <div class="auth-layout">
+      <section class="auth-hero">
+        <div class="brand-wordmark">
+          <span class="brand-mark">F</span>
+          <span class="brand-name">FilmFinder</span>
+        </div>
+        <div>
+          <p class="eyebrow">Now streaming</p>
+          <h1>Discover movies that match your mood.</h1>
+          <p class="hero-text">
+            Get smart recommendations for your next binge-worthy watch.
+          </p>
+        </div>
+      </section>
+
+      <section class="auth-card-wrap">
+        <div class="container auth-card">
+          <h2>Sign In</h2>
+          <form method="POST" action="/login">
+            <input type="text" name="username" placeholder="Username" />
+            <input type="password" name="password" placeholder="Password" />
+            <button type="submit">Login</button>
+          </form>
+          <p class="auth-link">
+            New user? <a href="/signup_page">Create an account</a>
+          </p>
+        </div>
+      </section>
+    </div>
+
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <div class="alert">
+      {% for msg in messages %}
+      <p>{{ msg }}</p>
+      {% endfor %}
+    </div>
+    {% endif %} {% endwith %}
+  </body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#02070f" />
+    <title>{{ movie.title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="page-wrap movie-page">
+      <header class="top-bar">
+        <div class="brand-wrap">
+          <a href="/dashboard" class="brand-wordmark small">
+            <span class="brand-mark">F</span>
+            <span class="brand-name">FilmFinder</span>
+          </a>
+        </div>
+        <div class="top-actions">
+          <span class="user-pill">{{ user }}</span>
+          {% if user != "Guest" %}
+          <a href="/logout" class="logout-btn">Logout</a>
+          {% endif %}
+        </div>
+      </header>
+
+      <section class="movie-detail-card">
+        <div class="movie-detail-poster-wrap">
+          <img
+            src="{{ movie.poster }}"
+            alt="{{ movie.title }}"
+            class="movie-detail-poster"
+            onerror="
+              this.onerror = null;
+              this.src = '/static/no_poster.png';
+            "
+          />
+        </div>
+        <div class="movie-detail-content">
+          <a href="/dashboard" class="back-btn">← Back</a>
+          <p class="eyebrow">Now showing</p>
+          <h1>{{ movie.title }}</h1>
+          <p class="movie-tagline">{{ movie.tagline }}</p>
+          <div class="movie-meta">
+            <span>⭐ {{ movie.rating|round(1) }}/10</span>
+            <span>{{ movie.vote_count }} votes</span>
+          </div>
+          <div class="movie-genres">
+            {% for genre in movie.genres %}
+            <span>{{ genre }}</span>
+            {% endfor %}
+          </div>
+          <h3>Overview</h3>
+          <p class="movie-overview">{{ movie.overview }}</p>
+          <h3>Reviews</h3>
+          <p class="movie-review">{{ movie.review_summary }}</p>
+          <h3>Director</h3>
+          <p>{{ movie.director }}</p>
+          <h3>Actors</h3>
+          <div class="actor-list">
+            {% for actor in movie.cast %}
+            <span>{{ actor }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
